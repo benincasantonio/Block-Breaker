@@ -7,9 +7,16 @@ public class Ball : MonoBehaviour {
 
     Vector2 ballToPaddleDifference;
     bool ballLaunched = false;
+
+    [SerializeField]
+    private AudioClip[] ballSounds;
+
+    private AudioSource audioSource;
+
 	// Use this for initialization
 	void Start () {
         ballToPaddleDifference = transform.position - paddle.transform.position;
+        audioSource = GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -30,6 +37,13 @@ public class Ball : MonoBehaviour {
         if(Input.GetMouseButtonDown(0)) {
             GetComponent<Rigidbody2D>().velocity = new Vector2(-2f, 13f);
             ballLaunched = true;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision) {
+        if (ballLaunched) {
+            int soundIndex = UnityEngine.Random.Range(0, ballSounds.Length);
+            audioSource.PlayOneShot(ballSounds[soundIndex]);
         }
     }
 }
