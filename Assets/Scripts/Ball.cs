@@ -35,7 +35,7 @@ public class Ball : MonoBehaviour {
 
     private void launchBall() {
         if(Input.GetMouseButtonDown(0)) {
-            GetComponent<Rigidbody2D>().velocity = new Vector2(-2f, 13f);
+            GetComponent<Rigidbody2D>().velocity = new Vector2(-2f, 9f);
             ballLaunched = true;
         }
     }
@@ -45,5 +45,9 @@ public class Ball : MonoBehaviour {
             int soundIndex = UnityEngine.Random.Range(0, ballSounds.Length);
             audioSource.PlayOneShot(ballSounds[soundIndex]);
         }
+    }
+
+    public void lockBall() {
+        this.ballLaunched = false;
     }
 }

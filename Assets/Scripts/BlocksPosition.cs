@@ -9,7 +9,7 @@ public class BlocksPosition : MonoBehaviour
     void Start()
     {
         Level level = new Level();
-        level.levelNumber = 1;
+        level.levelNumber = 2;
         List<BlockOptions> blockList = new List<BlockOptions>();
 
         for(int i = 0; i < transform.childCount; i++) {
