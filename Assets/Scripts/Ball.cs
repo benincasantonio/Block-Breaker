@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Ball : MonoBehaviour {
     [SerializeField] PaddleMovement paddle;
@@ -12,11 +10,16 @@ public class Ball : MonoBehaviour {
     private AudioClip[] ballSounds;
 
     private AudioSource audioSource;
+    private Rigidbody2D ballRigidbody;
+
+    [SerializeField]
+    private float maxBounceTweak = 0.2f;
 
 	// Use this for initialization
 	void Start () {
         ballToPaddleDifference = transform.position - paddle.transform.position;
         audioSource = GetComponent<AudioSource>();
+        ballRigidbody = GetComponent<Rigidbody2D>();
 	}
 	
 	// Update is called once per frame
@@ -41,9 +44,15 @@ public class Ball : MonoBehaviour {
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
+        Vector2 bounceTweak = new Vector2(
+            Random.Range(0, maxBounceTweak),
+            Random.Range(0, maxBounceTweak));
+
         if (ballLaunched) {
             int soundIndex = UnityEngine.Random.Range(0, ballSounds.Length);
             audioSource.PlayOneShot(ballSounds[soundIndex]);
+
+            ballRigidbody.velocity += bounceTweak;
         }
     }
 
